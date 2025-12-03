@@ -1,0 +1,746 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>CrispyBites — Quick Snacks Delivery</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <style>
+         :root {
+            --bg: #f8fafc;
+            --card: #ffffff;
+            --accent: #ff6b00;
+            --muted: #6b7280;
+            --shadow: rgba(15, 23, 42, 0.06);
+            --radius: 12px;
+            --maxw: 1200px;
+            font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, Arial;
+        }
+        
+        * {
+            box-sizing: border-box
+        }
+        
+        body {
+            margin: 0;
+            background: var(--bg);
+            color: #0f1724;
+            line-height: 1.4
+        }
+        
+        .wrap {
+            max-width: 1200px;
+            margin: 28px auto;
+            padding: 0 20px
+        }
+        
+        header {
+            background: var(--card);
+            border-radius: 14px;
+            padding: 14px 18px;
+            box-shadow: 0 6px 18px var(--shadow);
+        }
+        
+        .nav {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px
+        }
+        
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 14px
+        }
+        
+        .logo {
+            width: 56px;
+            height: 56px;
+            border-radius: 14px;
+            background: linear-gradient(135deg, var(--accent), #ff9156);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 800;
+            font-size: 18px
+        }
+        
+        .brand .title {
+            font-weight: 800;
+            font-size: 18px
+        }
+        
+        nav ul {
+            display: flex;
+            gap: 18px;
+            list-style: none;
+            padding: 0;
+            margin: 0
+        }
+        
+        nav a {
+            color: var(--muted);
+            text-decoration: none;
+            font-weight: 600
+        }
+        
+        .cta {
+            background: var(--accent);
+            color: white;
+            padding: 10px 14px;
+            border-radius: 10px;
+            font-weight: 700;
+            text-decoration: none
+        }
+        
+        .hero {
+            display: grid;
+            grid-template-columns: 1fr 420px;
+            gap: 22px;
+            align-items: center;
+            margin-top: 18px
+        }
+        
+        .hero-card {
+            background: transparent;
+            padding: 12px
+        }
+        /* float animation for the headline */
+        
+        @keyframes floatY {
+            0% {
+                transform: translateY(0)
+            }
+            50% {
+                transform: translateY(-10px)
+            }
+            100% {
+                transform: translateY(0)
+            }
+        }
+        
+        h1 {
+            font-size: 32px;
+            margin: 6px 0;
+            display: inline-block;
+            animation: floatY 3s ease-in-out infinite
+        }
+        
+        p.lead {
+            color: var(--muted);
+            margin: 0 0 14px
+        }
+        
+        .search {
+            display: flex;
+            gap: 8px;
+            align-items: center
+        }
+        
+        .search input {
+            flex: 1;
+            padding: 14px;
+            border-radius: 12px;
+            border: 1px solid rgba(15, 23, 42, 0.06);
+            font-size: 15px
+        }
+        
+        .search button {
+            background: var(--accent);
+            color: white;
+            border: none;
+            padding: 12px 16px;
+            border-radius: 12px;
+            font-weight: 700
+        }
+        
+        .hero-panel {
+            border-radius: 14px;
+            overflow: hidden;
+            box-shadow: 0 8px 26px var(--shadow);
+            min-height: 260px
+        }
+        
+        .hero-panel img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            background: #f3f4f6
+        }
+        
+        .section {
+            margin-top: 22px
+        }
+        
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 16px;
+            margin-top: 12px
+        }
+        
+        .card {
+            background: var(--card);
+            padding: 12px;
+            border-radius: 12px;
+            box-shadow: 0 6px 18px var(--shadow);
+            display: flex;
+            flex-direction: column;
+            gap: 10px
+        }
+        
+        .thumb {
+            height: 170px;
+            border-radius: 10px;
+            overflow: hidden;
+            background: #f3f4f6;
+            display: flex;
+            align-items: center;
+            justify-content: center
+        }
+        
+        .thumb img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block
+        }
+        
+        .card h4 {
+            margin: 0;
+            font-size: 16px
+        }
+        
+        .meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center
+        }
+        
+        .price {
+            color: var(--accent);
+            font-weight: 800
+        }
+        
+        .muted {
+            color: var(--muted)
+        }
+        
+        footer {
+            margin-top: 26px;
+            padding: 18px;
+            border-radius: 12px;
+            background: transparent;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: var(--muted)
+        }
+        
+        .cart-btn {
+            position: fixed;
+            right: 20px;
+            bottom: 20px;
+            background: var(--accent);
+            color: white;
+            border: none;
+            padding: 12px 16px;
+            border-radius: 999px;
+            box-shadow: 0 8px 24px var(--shadow);
+            font-weight: 700;
+            cursor: pointer
+        }
+        
+        .cart-count {
+            background: #071725;
+            color: white;
+            border-radius: 999px;
+            padding: 2px 8px;
+            font-size: 12px;
+            margin-left: 8px
+        }
+        
+        .cart-panel {
+            position: fixed;
+            right: 20px;
+            bottom: 80px;
+            width: 340px;
+            max-height: 70vh;
+            background: var(--card);
+            box-shadow: 0 12px 32px var(--shadow);
+            border-radius: 14px;
+            padding: 12px;
+            display: none;
+            flex-direction: column;
+            gap: 12px;
+            overflow: auto
+        }
+        
+        .cart-item {
+            display: flex;
+            gap: 10px;
+            align-items: center
+        }
+        
+        .cart-item img {
+            width: 56px;
+            height: 56px;
+            border-radius: 8px;
+            object-fit: cover
+        }
+        
+        .qty-controls {
+            display: flex;
+            gap: 8px;
+            align-items: center
+        }
+        
+        .qty-controls button {
+            padding: 6px 8px;
+            border-radius: 8px;
+            border: 1px solid rgba(15, 23, 42, 0.06);
+            background: white;
+            cursor: pointer
+        }
+        
+        .highlights {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap
+        }
+        
+        .highlight {
+            background: var(--card);
+            padding: 12px;
+            border-radius: 12px;
+            box-shadow: 0 6px 14px var(--shadow);
+            display: flex;
+            gap: 10px;
+            align-items: center
+        }
+        
+        @media(max-width:1000px) {
+            .grid {
+                grid-template-columns: repeat(2, 1fr)
+            }
+            .hero {
+                grid-template-columns: 1fr
+            }
+        }
+        
+        @media(max-width:620px) {
+            .grid {
+                grid-template-columns: repeat(1, 1fr)
+            }
+            nav ul {
+                display: none
+            }
+            .brand .title {
+                font-size: 16px
+            }
+            .logo {
+                width: 48px;
+                height: 48px
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="wrap">
+        <header>
+            <div class="nav">
+                <div class="brand">
+                    <!-- changed logo: clean SVG + text for a simple, modern look -->
+                    <div class="logo" aria-hidden="true">
+                        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="CrispyBites logo">
+              <rect width="24" height="24" rx="6" fill="white" fill-opacity="0.06"></rect>
+              <path d="M6 12c1.333-2 4-4 6-4s4.667 2 6 4c-1.333 2-4 4-6 4s-4.667-2-6-4Z" fill="white" opacity="0.95"></path>
+            </svg>
+                    </div>
+                    <div>
+                        <div class="title">CrispyBites</div>
+                        <div style="font-size:12px;color:var(--muted)">Quick snacks, doorstep delivery</div>
+                    </div>
+                </div>
+
+                <nav>
+                    <ul>
+                        <li><a href="#snacks">Snacks</a></li>
+                        <li><a href="#deals">Deals</a></li>
+                        <li><a href="#about">About</a></li>
+                        <li><a href="#contact">Contact</a></li>
+                    </ul>
+                </nav>
+
+                <div style="display:flex;align-items:center;gap:12px">
+                    <a class="cta" href="#order">Order Now</a>
+                </div>
+            </div>
+        </header>
+
+        <main>
+            <section class="hero">
+                <div class="hero-card">
+                    <h1 id="headline">Hot snacks, Fast delivery.</h1>
+                    <p class="lead">Explore local favorites and curated snack boxes — delivered to you quickly.</p>
+
+                    <div class="search" style="margin-top:12px">
+                        <input id="searchInput" placeholder="Search for snacks, combos or restaurants - e.g., samosa, chips" />
+                        <button id="searchBtn">Search</button>
+                    </div>
+
+                </div>
+
+                <div class="hero-panel">
+                    <img src="https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=1200&q=60" alt="Assorted snacks" loading="eager" onerror="this.onerror=null;this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'800\' height=\'600\'><rect width=\'100%\' height=\'100%\' fill=\'%23f3f4f6\'/><text x=\'50%\' y=\'50%\' dominant-baseline=\'middle\' text-anchor=\'middle\' font-size=\'24\' fill=\'%236b7280\'>Image not available</text></svg>'">
+                </div>
+            </section>
+
+            <section id="deals" class="section">
+                <h2 style="margin-bottom:12px">Menu & Prices</h2>
+                <div class="grid" id="productGrid">
+                    <!-- cards same as before, but each image now has onerror fallback to ensure visibility -->
+
+                    <div class="card" data-name="Spicy Masala Chips" data-price="99">
+                        <div class="thumb"><img src="spicy.jpg" alt="Spicy Masala Chips" loading="eager" onerror="this.onerror=null;this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'400\' height=\'300\'><rect width=\'100%\' height=\'100%\' fill=\'%23f3f4f6\'/><text x=\'50%\' y=\'50%\' dominant-baseline=\'middle\' text-anchor=\'middle\' font-size=\'18\' fill=\'%236b7280\'>Image not available</text></svg>'"></div>
+                        <h4>Spicy Masala Chips</h4>
+                        <div class="muted">Bold spice • Crunchy</div>
+                        <div class="meta">
+                            <div></div>
+                            <div class="price">₹99</div>
+                        </div>
+                        <button class="add-btn" style="padding:8px;border-radius:10px;border:none;background:var(--accent);color:white;font-weight:700;cursor:pointer">Add to cart</button>
+                    </div>
+
+                    <div class="card" data-name="Cheesy Nachos" data-price="149">
+                        <div class="thumb"><img src="https://images.unsplash.com/photo-1542834369-f10ebf06d3cb?auto=format&fit=crop&w=800&q=60" alt="Cheesy Nachos" loading="eager" onerror="this.onerror=null;this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'100\' height=\'100\'><rect width=\'100%\' height=\'100%\' fill=\'%23f3f4f6\'/><text x=\'50%\' y=\'50%\' dominant-baseline=\'middle\' text-anchor=\'middle\' font-size=\'18\' fill=\'%236b7280\'>Image not available</text></svg>'"></div>
+                        <h4>Cheesy Nachos</h4>
+                        <div class="muted">Perfect for sharing</div>
+                        <div class="meta">
+                            <div></div>
+                            <div class="price">₹149</div>
+                        </div>
+                        <button class="add-btn" style="padding:8px;border-radius:10px;border:none;background:var(--accent);color:white;font-weight:700;cursor:pointer">Add to cart</button>
+                    </div>
+
+                    <div class="card" data-name="Mini Donut Bites" data-price="129">
+                        <div class="thumb"><img src="https://images.unsplash.com/photo-1563805042-7684c019e1cb?auto=format&fit=crop&w=800&q=60" alt="Donut Bites" loading="eager" onerror="this.onerror=null;this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'400\' height=\'300\'><rect width=\'100%\' height=\'100%\' fill=\'%23f3f4f6\'/><text x=\'50%\' y=\'50%\' dominant-baseline=\'middle\' text-anchor=\'middle\' font-size=\'18\' fill=\'%236b7280\'>Image not available</text></svg>'"></div>
+                        <h4>Mini Donut Bites</h4>
+                        <div class="muted">Sweet & fluffy</div>
+                        <div class="meta">
+                            <div></div>
+                            <div class="price">₹129</div>
+                        </div>
+                        <button class="add-btn" style="padding:8px;border-radius:10px;border:none;background:var(--accent);color:white;font-weight:700;cursor:pointer">Add to cart</button>
+                    </div>
+
+                    <div class="card" data-name="Classic Samosa" data-price="49">
+                        <div class="thumb"><img src="https://images.unsplash.com/photo-1585238342028-2f0b1b5b9f6b?auto=format&fit=crop&w=800&q=60" alt="Samosa" loading="eager" onerror="this.onerror=null;this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'400\' height=\'300\'><rect width=\'100%\' height=\'100%\' fill=\'%23f3f4f6\'/><text x=\'50%\' y=\'50%\' dominant-baseline=\'middle\' text-anchor=\'middle\' font-size=\'18\' fill=\'%236b7280\'>Image not available</text></svg>'"></div>
+                        <h4>Classic Samosa</h4>
+                        <div class="muted">Crispy, potato filling</div>
+                        <div class="meta">
+                            <div></div>
+                            <div class="price">₹49</div>
+                        </div>
+                        <button class="add-btn" style="padding:8px;border-radius:10px;border:none;background:var(--accent);color:white;font-weight:700;cursor:pointer">Add to cart</button>
+                    </div>
+
+                    <div class="card" data-name="Family Chips Pack" data-price="149">
+                        <div class="thumb"><img src="https://images.unsplash.com/photo-1600891964599-f61ba0e24092?auto=format&fit=crop&w=800&q=60" alt="Family Chips" loading="eager" onerror="this.onerror=null;this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'400\' height=\'300\'><rect width=\'100%\' height=\'100%\' fill=\'%23f3f4f6\'/><text x=\'50%\' y=\'50%\' dominant-baseline=\'middle\' text-anchor=\'middle\' font-size=\'18\' fill=\'%236b7280\'>Image not available</text></svg>'"></div>
+                        <h4>Family Chips Pack</h4>
+                        <div class="muted">Great for parties</div>
+                        <div class="meta">
+                            <div></div>
+                            <div class="price">₹149</div>
+                        </div>
+                        <button class="add-btn" style="padding:8px;border-radius:10px;border:none;background:var(--accent);color:white;font-weight:700;cursor:pointer">Add to cart</button>
+                    </div>
+
+                    <div class="card" data-name="Roasted Nut Mix" data-price="259">
+                        <div class="thumb"><img src="nuts" alt="Nut Mix" loading="eager" onerror="this.onerror=null;this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'400\' height=\'300\'><rect width=\'100%\' height=\'100%\' fill=\'%23f3f4f6\'/><text x=\'50%\' y=\'50%\' dominant-baseline=\'middle\' text-anchor=\'middle\' font-size=\'18\' fill=\'%236b7280\'>Image not available</text></svg>'"></div>
+                        <h4>Roasted Nut Mix</h4>
+                        <div class="muted">Almonds, cashews & raisins</div>
+                        <div class="meta">
+                            <div></div>
+                            <div class="price">₹259</div>
+                        </div>
+                        <button class="add-btn" style="padding:8px;border-radius:10px;border:none;background:var(--accent);color:white;font-weight:700;cursor:pointer">Add to cart</button>
+                    </div>
+
+                    <div class="card" data-name="https://stordfkenticomedia.blob.core.windows.net/df-us/rms/media/recipemediafiles/recipe%20images%20and%20files/retail/desktop%20(600x600)/2025/april/2025_retail_best-ever-butter-cookies_600x600.webp?ext=.webp" data-price="179">
+                        <div class="thumb"><img src="" alt="Cookies" loading="eager" onerror="this.onerror=null;this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'400\' height=\'300\'><rect width=\'100%\' height=\'100%\' fill=\'%23f3f4f6\'/><text x=\'50%\' y=\'50%\' dominant-baseline=\'middle\' text-anchor=\'middle\' font-size=\'18\' fill=\'%236b7280\'>Image not available</text></svg>'"></div>
+                        <h4>Buttery Cookies</h4>
+                        <div class="muted">Homestyle, limited edition</div>
+                        <div class="meta">
+                            <div></div>
+                            <div class="price">₹179</div>
+                        </div>
+                        <button class="add-btn" style="padding:8px;border-radius:10px;border:none;background:var(--accent);color:white;font-weight:700;cursor:pointer">Add to cart</button>
+                    </div>
+
+                    <div class="card" data-name="Paneer Sandwich" data-price="129">
+                        <div class="thumb"><img src="https://images.unsplash.com/photo-1550258987-190a2d41a8ba?auto=format&fit=crop&w=800&q=60" alt="Sandwich" loading="eager" onerror="this.onerror=null;this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'400\' height=\'300\'><rect width=\'100%\' height=\'100%\' fill=\'%23f3f4f6\'/><text x=\'50%\' y=\'50%\' dominant-baseline=\'middle\' text-anchor=\'middle\' font-size=\'18\' fill=\'%236b7280\'>Image not available</text></svg>'"></div>
+                        <h4>Paneer Sandwich</h4>
+                        <div class="muted">Grilled with chutney</div>
+                        <div class="meta">
+                            <div></div>
+                            <div class="price">₹129</div>
+                        </div>
+                        <button class="add-btn" style="padding:8px;border-radius:10px;border:none;background:var(--accent);color:white;font-weight:700;cursor:pointer">Add to cart</button>
+                    </div>
+
+                    <div class="card" data-name="Chicken Momos" data-price="159">
+                        <div class="thumb"><img src="https://images.unsplash.com/photo-1532634896-26909d0d6b24?auto=format&fit=crop&w=800&q=60" alt="Momos" loading="eager" onerror="this.onerror=null;this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'400\' height=\'300\'><rect width=\'100%\' height=\'100%\' fill=\'%23f3f4f6\'/><text x=\'50%\' y=\'50%\' dominant-baseline=\'middle\' text-anchor=\'middle\' font-size=\'18\' fill=\'%236b7280\'>Image not available</text></svg>'"></div>
+                        <h4>Chicken Momos (6 pcs)</h4>
+                        <div class="muted">Steamed, served with dip</div>
+                        <div class="meta">
+                            <div></div>
+                            <div class="price">₹159</div>
+                        </div>
+                        <button class="add-btn" style="padding:8px;border-radius:10px;border:none;background:var(--accent);color:white;font-weight:700;cursor:pointer">Add to cart</button>
+                    </div>
+
+                    <div class="card" data-name="Veg Spring Roll" data-price="119">
+                        <div class="thumb"><img src="https://images.unsplash.com/photo-1598515213142-3d1a7b3e5a58?auto=format&fit=crop&w=800&q=60" alt="Spring Roll" loading="eager" onerror="this.onerror=null;this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'400\' height=\'300\'><rect width=\'100%\' height=\'100%\' fill=\'%23f3f4f6\'/><text x=\'50%\' y=\'50%\' dominant-baseline=\'middle\' text-anchor=\'middle\' font-size=\'18\' fill=\'%236b7280\'>Image not available</text></svg>'"></div>
+                        <h4>Veg Spring Roll (4 pcs)</h4>
+                        <div class="muted">Crispy & tasty</div>
+                        <div class="meta">
+                            <div></div>
+                            <div class="price">₹119</div>
+                        </div>
+                        <button class="add-btn" style="padding:8px;border-radius:10px;border:none;background:var(--accent);color:white;font-weight:700;cursor:pointer">Add to cart</button>
+                    </div>
+
+                    <div class="card" data-name="Paneer Tikka Wrap" data-price="179">
+                        <div class="thumb"><img src="https://images.unsplash.com/photo-1606756799298-8d1b3e6a2b0b?auto=format&fit=crop&w=800&q=60" alt="Wrap" loading="eager" onerror="this.onerror=null;this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'400\' height=\'300\'><rect width=\'100%\' height=\'100%\' fill=\'%23f3f4f6\'/><text x=\'50%\' y=\'50%\' dominant-baseline=\'middle\' text-anchor=\'middle\' font-size=\'18\' fill=\'%236b7280\'>Image not available</text></svg>'"></div>
+                        <h4>Paneer Tikka Wrap</h4>
+                        <div class="muted">Spicy & filling</div>
+                        <div class="meta">
+                            <div></div>
+                            <div class="price">₹179</div>
+                        </div>
+                        <button class="add-btn" style="padding:8px;border-radius:10px;border:none;background:var(--accent);color:white;font-weight:700;cursor:pointer">Add to cart</button>
+                    </div>
+
+                    <div class="card" data-name="Chocolate Brownie" data-price="99">
+                        <div class="thumb"><img src="https://images.unsplash.com/photo-1541781774459-bb7a3d6d0b4e?auto=format&fit=crop&w=800&q=60" alt="Brownie" loading="eager" onerror="this.onerror=null;this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'400\' height=\'300\'><rect width=\'100%\' height=\'100%\' fill=\'%23f3f4f6\'/><text x=\'50%\' y=\'50%\' dominant-baseline=\'middle\' text-anchor=\'middle\' font-size=\'18\' fill=\'%236b7280\'>Image not available</text></svg>'"></div>
+                        <h4>Chocolate Brownie</h4>
+                        <div class="muted">Rich & fudgy</div>
+                        <div class="meta">
+                            <div></div>
+                            <div class="price">₹99</div>
+                        </div>
+                        <button class="add-btn" style="padding:8px;border-radius:10px;border:none;background:var(--accent);color:white;font-weight:700;cursor:pointer">Add to cart</button>
+                    </div>
+
+                </div>
+            </section>
+
+            <section id="about" class="section">
+                <h2>About CrispyBites</h2>
+                <p class="muted">CrispyBites connects you to nearby kitchen partners and snack makers. We focus on quick delivery, clean packaging and tasty bites.</p>
+            </section>
+
+            <section id="highlights" class="section">
+                <h2>Main Points</h2>
+                <div class="highlights">
+                    <div class="highlight">🍽️ <strong>Assorted snacks</strong> — wide variety for every taste</div>
+                    <div class="highlight">⏱️ <strong>30 min delivery</strong> — available in selected areas</div>
+                    <div class="highlight">🌱 <strong>Fresh & Local</strong> — small-batch & clean packaging</div>
+                    <div class="highlight">⭐ <strong>Popular near you</strong> — top picks from nearby kitchens</div>
+                </div>
+            </section>
+
+            <section id="contact" class="section">
+                <h2>Contact & Support</h2>
+                <p class="muted">Questions? Email <strong>hello@crispybites.example</strong> or call <strong>+91 7386341416</strong>.</p>
+            </section>
+
+        </main>
+
+        <footer>
+            <div>
+                <div style="font-weight:800">CrispyBites</div>
+                <div style="font-size:13px;color:var(--muted)">&copy; <span id="year"></span> CrispyBites</div>
+            </div>
+            <div style="color:var(--muted)">Follow us • Instagram • Facebook</div>
+        </footer>
+    </div>
+
+    <!-- Cart UI -->
+    <button class="cart-btn" id="cartToggle">Cart <span class="cart-count" id="cartCount">0</span></button>
+    <div class="cart-panel" id="cartPanel" aria-hidden="true">
+        <h3 style="margin:0">Your Cart</h3>
+        <div id="cartItems" style="display:flex;flex-direction:column;gap:10px;margin-top:8px"></div>
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-top:8px;font-weight:800">
+            <div>Total</div>
+            <div id="cartTotal">₹0</div>
+        </div>
+        <div style="display:flex;gap:8px;margin-top:10px">
+            <button id="checkoutBtn" style="flex:1;padding:10px;border-radius:10px;border:none;background:var(--accent);color:white;font-weight:800;cursor:pointer">Checkout</button>
+            <button id="clearCartBtn" style="padding:10px;border-radius:10px;border:1px solid rgba(15,23,42,0.06);background:white;cursor:pointer">Clear</button>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('year').textContent = new Date().getFullYear();
+
+        // Search filter (click or enter)
+        const searchBtn = document.getElementById('searchBtn');
+        const searchInput = document.getElementById('searchInput');
+        const grid = document.getElementById('productGrid');
+
+        function filterProducts() {
+            const q = (searchInput.value || '').toLowerCase().trim();
+            const cards = Array.from(grid.querySelectorAll('.card'));
+            cards.forEach(c => {
+                const name = (c.getAttribute('data-name') || '').toLowerCase();
+                if (!q || name.includes(q)) c.style.display = 'flex';
+                else c.style.display = 'none';
+            });
+        }
+        searchBtn.addEventListener('click', filterProducts);
+        searchInput.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') filterProducts();
+        });
+
+        // CART logic (same as before)
+        const cartToggle = document.getElementById('cartToggle');
+        const cartPanel = document.getElementById('cartPanel');
+        const cartCount = document.getElementById('cartCount');
+        const cartItemsEl = document.getElementById('cartItems');
+        const cartTotalEl = document.getElementById('cartTotal');
+        const clearCartBtn = document.getElementById('clearCartBtn');
+        const checkoutBtn = document.getElementById('checkoutBtn');
+
+        let cart = {}; // key: name -> {price, qty, img, name}
+
+        function renderCart() {
+            cartItemsEl.innerHTML = '';
+            let total = 0;
+            let totalQty = 0;
+            Object.values(cart).forEach(item => {
+                total += item.price * item.qty;
+                totalQty += item.qty;
+                const el = document.createElement('div');
+                el.className = 'cart-item';
+                el.innerHTML = <
+                    img src = "${item.img}"
+                alt = "${item.name}" >
+                    <
+                    div style = "flex:1" >
+                    <
+                    div style = "font-weight:700" > $ {
+                        item.name
+                    } < /div> <
+                    div style = "font-size:13px;color:var(--muted)" > ₹$ {
+                        item.price
+                    }×
+                $ {
+                    item.qty
+                } < /div> <
+                /div> <
+                div class = \"qty-controls\"> <
+                    button class = \"dec\">-</button> <
+                    div style = \"min-width:20px;text-align:center\">${item.qty}</div> <
+                    button class = \"inc\">+</button> <
+                    button class = \"remove\" style=\"margin-left:8px;color:#ff4d4f;background:transparent;border:none;cursor:pointer\">✕</button> <
+                    /div>;
+                el.querySelector('.inc').addEventListener('click', () => {
+                    addToCart(item.name, 1);
+                });
+                el.querySelector('.dec').addEventListener('click', () => {
+                    addToCart(item.name, -1);
+                });
+                el.querySelector('.remove').addEventListener('click', () => {
+                    removeFromCart(item.name);
+                });
+
+                cartItemsEl.appendChild(el);
+            });
+            cartTotalEl.textContent = ₹$ {
+                total
+            };
+            cartCount.textContent = totalQty;
+        }
+
+        function addToCart(name, delta = 1) {
+            const card = Array.from(grid.querySelectorAll('.card')).find(c => c.getAttribute('data-name') === name);
+            if (!card) return;
+            const price = Number(card.getAttribute('data-price'));
+            const imgEl = card.querySelector('img');
+            const img = imgEl ? imgEl.src : '';
+            if (!cart[name]) cart[name] = {
+                name,
+                price,
+                qty: 0,
+                img
+            };
+            cart[name].qty = Math.max(0, cart[name].qty + delta);
+            if (cart[name].qty === 0) delete cart[name];
+            renderCart();
+        }
+
+        function removeFromCart(name) {
+            delete cart[name];
+            renderCart();
+        }
+
+        Array.from(document.querySelectorAll('.add-btn')).forEach(btn => {
+            btn.addEventListener('click', () => {
+                const card = btn.closest('.card');
+                const name = card.getAttribute('data-name');
+                addToCart(name, 1);
+                cartPanel.style.display = 'flex';
+                cartPanel.setAttribute('aria-hidden', 'false');
+            });
+        });
+
+        cartToggle.addEventListener('click', () => {
+            if (cartPanel.style.display === 'flex') {
+                cartPanel.style.display = 'none';
+                cartPanel.setAttribute('aria-hidden', 'true');
+            } else {
+                cartPanel.style.display = 'flex';
+                cartPanel.setAttribute('aria-hidden', 'false');
+            }
+        });
+
+        clearCartBtn.addEventListener('click', () => {
+            cart = {};
+            renderCart();
+        });
+        checkoutBtn.addEventListener('click', () => {
+            if (Object.keys(cart).length === 0) {
+                alert('Your cart is empty');
+                return;
+            }
+            alert('Checkout — total ' + cartTotalEl.textContent + '. (This is a demo.)');
+            cart = {};
+            renderCart();
+            cartPanel.style.display = 'none';
+        });
+
+        // ensure all images have a fallback if they fail to load after page shows
+        window.addEventListener('load', () => {
+            document.querySelectorAll('img').forEach(img => {
+                img.addEventListener('error', () => {
+                    if (!img.dataset.fallback) {
+                        img.dataset.fallback = '1';
+                        img.src = 'data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'400\' height=\'300\'><rect width=\'100%\' height=\'100%\' fill=\'%23f3f4f6\'/><text x=\'50%\' y=\'50%\' dominant-baseline=\'middle\' text-anchor=\'middle\' font-size=\'16\' fill=\'%236b7280\'>Image not available</text></svg>';
+                    }
+                });
+            });
+        });
+
+        // initialize
+        renderCart();
+    </script>
+</body>
+
+</html>
