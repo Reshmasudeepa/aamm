@@ -31,72 +31,49 @@ a {
 .surprise-screen {
   min-height: 100vh;
 
-  display: flex;
-  justify-content: center;
-  align-items: center;
-
-  text-align: center;
-
-  padding: 20px;
-
   position: relative;
   overflow: hidden;
+}
+
+.surprise-screen::after {
+  content: "";
+
+  position: absolute;
+  inset: 0;
 
   background:
-    radial-gradient(circle at top left, #ffdbe7, transparent 40%),
-    radial-gradient(circle at bottom right, #f7c4d7, transparent 40%),
-    #fff8fa;
+    radial-gradient(circle at center, transparent 35%, rgba(255, 220, 232, 0.55) 100%),
+    linear-gradient(180deg, rgba(255, 246, 250, 0.15) 0%, rgba(255, 232, 242, 0.35) 100%);
+
+  pointer-events: none;
+  z-index: 1;
 }
 
-.surprise-card {
-  width: min(650px, 95%);
+.surprise-cover {
+  width: 100%;
+  height: 100vh;
 
-  padding: 60px 35px;
+  object-fit: cover;
+  object-position: center;
 
-  background: rgba(255, 255, 255, 0.86);
+  display: block;
+}
 
-  border: 1px solid rgba(255, 255, 255, 0.95);
-  border-radius: 30px;
+.surprise-cta {
+  position: absolute;
+  left: 50%;
+  bottom: clamp(16px, 4vw, 38px);
+  transform: translateX(-50%);
 
-  box-shadow: 0 25px 70px rgba(125, 50, 80, 0.12);
-
-  position: relative;
   z-index: 2;
 
-  animation: cardAppear 0.9s ease;
-}
+  padding: 12px;
+  border-radius: 999px;
 
-.gift {
-  font-size: 75px;
+  background: rgba(255, 255, 255, 0.4);
+  backdrop-filter: blur(8px);
 
-  animation: bounce 1.8s infinite;
-}
-
-.small-text {
-  color: #e34f7c;
-
-  margin-top: 22px;
-
-  font-size: 18px;
-  font-weight: 600;
-}
-
-.surprise-card h1 {
-  font-size: clamp(35px, 5vw, 48px);
-
-  line-height: 1.25;
-
-  margin: 20px 0;
-
-  color: #762943;
-}
-
-.surprise-description {
-  color: #805d69;
-
-  font-size: 17px;
-
-  margin-bottom: 32px;
+  box-shadow: 0 16px 40px rgba(120, 40, 75, 0.18);
 }
 
 .primary-btn {
@@ -125,203 +102,38 @@ a {
   box-shadow: 0 15px 30px rgba(231, 84, 128, 0.35);
 }
 
-.hint {
-  display: block;
-
-  margin-top: 25px;
-
-  color: #a77b8a;
-
-  font-size: 13px;
-}
-
-/* Floating Hearts */
-
-.floating-heart {
-  position: absolute;
-
-  color: #ee91af;
-
-  font-size: 35px;
-
-  animation: float 4s ease-in-out infinite;
-}
-
-.heart-1 {
-  top: 15%;
-  left: 10%;
-}
-
-.heart-2 {
-  top: 25%;
-  right: 12%;
-
-  animation-delay: 1s;
-}
-
-.heart-3 {
-  bottom: 17%;
-  left: 20%;
-
-  animation-delay: 2s;
-}
-
-.heart-4 {
-  bottom: 15%;
-  right: 18%;
-
-  animation-delay: 0.5s;
-}
-
 /* =========================
    BIRTHDAY HERO
 ========================= */
 
 .birthday-hero {
   min-height: 100vh;
-
+  width: 100%;
+  
   display: flex;
   justify-content: center;
   align-items: center;
-
-  text-align: center;
-
-  padding: 50px 20px;
-
+  
   position: relative;
-
   overflow: hidden;
-
-  background:
-    radial-gradient(circle at top left, #ffdce8, transparent 35%),
-    radial-gradient(circle at bottom right, #ffcddd, transparent 35%),
-    #fff7fa;
+  
+  background: #f5f5f5;
 }
 
-.hero-content {
-  width: min(800px, 95%);
-
-  animation: heroAppear 1s ease;
+.hero-image {
+  width: 100%;
+  height: 100%;
+  
+  object-fit: contain;
+  object-position: center;
+  
+  display: block;
+  
+  animation: heroFadeIn 1s ease;
 }
 
-.hero-small {
-  color: #d94f7c;
 
-  font-size: 13px;
-  font-weight: 700;
-
-  letter-spacing: 3px;
-}
-
-.cake {
-  font-size: 80px;
-
-  margin: 28px 0 18px;
-
-  animation: cakeBounce 2s infinite;
-}
-
-.birthday-hero h1 {
-  font-size: clamp(55px, 8vw, 100px);
-
-  color: #e44f7b;
-
-  line-height: 1;
-
-  margin: 10px 0;
-}
-
-.birthday-hero h2 {
-  font-size: clamp(35px, 5vw, 58px);
-
-  color: #742943;
-
-  margin: 15px 0 30px;
-}
-
-.hero-message {
-  max-width: 680px;
-
-  margin: auto;
-
-  color: #775562;
-
-  font-size: 18px;
-
-  line-height: 1.8;
-}
-
-.hero-sub {
-  margin-top: 15px;
-
-  color: #a2697c;
-
-  font-size: 16px;
-}
-
-.continue-btn {
-  display: inline-block;
-
-  margin-top: 38px;
-
-  padding: 15px 28px;
-
-  background: #e75480;
-
-  color: white;
-
-  border-radius: 50px;
-
-  font-weight: 600;
-
-  box-shadow: 0 10px 25px rgba(231, 84, 128, 0.22);
-
-  transition: 0.3s;
-}
-
-.continue-btn:hover {
-  transform: translateY(-4px);
-
-  box-shadow: 0 15px 30px rgba(231, 84, 128, 0.3);
-}
-
-.hero-decoration {
-  position: absolute;
-
-  font-size: 32px;
-
-  animation: heroFloat 4s ease-in-out infinite;
-}
-
-.decoration-1 {
-  top: 14%;
-  left: 12%;
-}
-
-.decoration-2 {
-  top: 23%;
-  right: 13%;
-
-  animation-delay: 1s;
-}
-
-.decoration-3 {
-  bottom: 15%;
-  left: 20%;
-
-  animation-delay: 2s;
-}
-
-.decoration-4 {
-  bottom: 17%;
-  right: 20%;
-
-  animation-delay: 0.5s;
-}
-
-/* =========================
-   MESSAGE SECTION
-========================= */
+/* MESSAGE SECTION */
 
 .message-section {
   min-height: 100vh;
@@ -607,11 +419,9 @@ a {
   position: relative;
   overflow: hidden;
 
-  background:
-    radial-gradient(circle at top left, #ffe4ef, transparent 28%),
-    radial-gradient(circle at top right, #ffeaf2, transparent 25%),
-    radial-gradient(circle at bottom left, #ffdce8, transparent 28%),
-    #fff8fb;
+  background: 
+    linear-gradient(rgba(255, 248, 251, 0.9), rgba(255, 248, 251, 0.9)),
+    url('/src/assets/sindhu2.jpg') center / cover no-repeat;
 }
 
 .special-things-container {
@@ -1515,24 +1325,19 @@ a {
 @media (max-width: 600px) {
   /* Surprise Screen */
 
-  .surprise-card {
-    padding: 45px 22px;
+  .surprise-cover {
+    height: 100vh;
+    object-position: 54% center;
   }
 
-  .gift {
-    font-size: 60px;
+  .surprise-cta {
+    width: calc(100% - 24px);
+    max-width: 360px;
+    padding: 10px;
   }
 
-  .small-text {
-    font-size: 16px;
-  }
-
-  .surprise-card h1 {
-    font-size: 32px;
-  }
-
-  .surprise-description {
-    font-size: 15px;
+  .surprise-cta .primary-btn {
+    width: 100%;
   }
 
   /* Birthday Hero */
