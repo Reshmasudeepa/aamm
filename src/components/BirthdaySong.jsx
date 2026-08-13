@@ -1,4 +1,6 @@
 import { useEffect, useRef, useState } from "react";
+import { motion } from "framer-motion";
+import { Music, Play, Square, Sparkles, Heart, Volume2, ArrowDown } from "lucide-react";
 import sindhuMusicPhoto from "../assets/sindhu-music.jpg";
 
 const baseMelody = [
@@ -36,9 +38,10 @@ const performancePlan = [
   { transpose: 0, tempo: 1.75, wave: "sine", restAfterMs: 2500 },
 ];
 
-function BirthdaySong() {
+function BirthdaySong({ externalIsPlaying, externalOnToggle }) {
   const [isPlaying, setIsPlaying] = useState(false);
   const [showNotes, setShowNotes] = useState(false);
+
   const audioContextRef = useRef(null);
   const masterGainRef = useRef(null);
   const filterRef = useRef(null);
@@ -57,7 +60,7 @@ function BirthdaySong() {
       try {
         currentOscillatorRef.current.stop();
       } catch {
-        // oscillator may already be stopped
+        // ignore if already stopped
       }
       currentOscillatorRef.current.disconnect();
       currentOscillatorRef.current = null;
@@ -90,11 +93,25 @@ function BirthdaySong() {
     };
   }, []);
 
+  // Sync external state from navbar toggle if needed
+  useEffect(() => {
+    if (externalIsPlaying !== undefined && externalIsPlaying !== isPlaying) {
+      if (externalIsPlaying) {
+        void startMelody();
+      } else {
+        stopMelody();
+      }
+    }
+  }, [externalIsPlaying]);
+
   const stopMelody = () => {
     stopRequestedRef.current = true;
     isPlayingRef.current = false;
     setIsPlaying(false);
     setShowNotes(false);
+    if (externalOnToggle && externalIsPlaying) {
+      externalOnToggle(false);
+    }
     cleanupAudio();
   };
 
@@ -131,13 +148,11 @@ function BirthdaySong() {
   };
 
   const finishMelody = () => {
-    if (stopRequestedRef.current) {
-      return;
-    }
-
+    if (stopRequestedRef.current) return;
     isPlayingRef.current = false;
     setIsPlaying(false);
     setShowNotes(false);
+    if (externalOnToggle) externalOnToggle(false);
     cleanupAudio();
   };
 
@@ -161,9 +176,7 @@ function BirthdaySong() {
     });
 
   const scheduleStep = (context, gainNode, queue, index) => {
-    if (stopRequestedRef.current) {
-      return;
-    }
+    if (stopRequestedRef.current) return;
 
     if (index >= queue.length) {
       finishMelody();
@@ -182,9 +195,7 @@ function BirthdaySong() {
   };
 
   const startMelody = async () => {
-    if (isPlayingRef.current) {
-      return;
-    }
+    if (isPlayingRef.current) return;
 
     stopRequestedRef.current = false;
 
@@ -195,9 +206,7 @@ function BirthdaySong() {
     isPlayingRef.current = true;
 
     const AudioContextClass = window.AudioContext || window.webkitAudioContext;
-    if (!AudioContextClass) {
-      return;
-    }
+    if (!AudioContextClass) return;
 
     const context = new AudioContextClass();
     const masterGain = context.createGain();
@@ -214,11 +223,14 @@ function BirthdaySong() {
     audioContextRef.current = context;
     masterGainRef.current = masterGain;
     filterRef.current = filter;
+
     setIsPlaying(true);
     setShowNotes(true);
+    if (externalOnToggle && !externalIsPlaying) {
+      externalOnToggle(true);
+    }
 
     await context.resume();
-
     const queue = buildPerformance();
     scheduleStep(context, masterGain, queue, 0);
   };
@@ -226,76 +238,140 @@ function BirthdaySong() {
   const handleToggle = () => {
     if (isPlaying) {
       stopMelody();
-      return;
+    } else {
+      void startMelody();
     }
-
-    void startMelody();
   };
 
   return (
-    <section className="birthday-song-section" id="music">
-      <div className="birthday-song-heart birthday-song-heart-1">💗</div>
-      <div className="birthday-song-heart birthday-song-heart-2">💗</div>
-      <div className="birthday-song-heart birthday-song-heart-3">💗</div>
+    <section className="birthday-song-section-redesign" id="music">
+      <div className="song-glow-orb" />
 
-      <div className={`birthday-song-shell${isPlaying ? " is-playing" : ""}`}>
-        <div className="birthday-song-heading">
-          <span>🎵</span>
+      <div className="birthday-song-shell-container">
+        {/* Section Heading */}
+        <motion.div
+          className="birthday-song-heading"
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.8 }}
+        >
+          <div className="section-pill-tag">
+            <Music size={18} className="text-pink" />
+            <span>A LITTLE BIRTHDAY TUNE FOR YOU</span>
+          </div>
 
-          <p>A LITTLE BIRTHDAY TUNE FOR YOU</p>
-
-          <h2>Happy Birthday, Sindhu! 💗</h2>
+          <h2 className="section-title-serif">Happy Birthday, Sindhu! 💗</h2>
 
           <p className="birthday-song-subtitle">
-            No birthday surprise is complete without this little tune... ✨
+            No birthday surprise is complete without this special tune playing in your honor ✨
           </p>
-        </div>
+        </motion.div>
 
-        <div
-          className={`birthday-song-player${isPlaying ? " is-playing" : ""}`}
+        {/* Player Card */}
+        <motion.div
+          className={`birthday-song-player-card ${isPlaying ? "is-playing" : ""}`}
+          initial={{ opacity: 0, scale: 0.94 }}
+          whileInView={{ opacity: 1, scale: 1 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.8, delay: 0.2 }}
           style={{
-            backgroundImage: `linear-gradient(180deg, rgba(18, 4, 12, 0.12) 0%, rgba(18, 4, 12, 0.62) 100%), url(${sindhuMusicPhoto})`,
-            backgroundPosition: "center 18%",
-            backgroundRepeat: "no-repeat",
+            backgroundImage: `linear-gradient(180deg, rgba(13, 3, 11, 0.45) 0%, rgba(13, 3, 11, 0.85) 100%), url(${sindhuMusicPhoto})`,
+            backgroundPosition: "center 22%",
             backgroundSize: "cover",
           }}
         >
+          {/* Animated Music Notes Overlay */}
           {showNotes && (
-            <>
-              <span className="music-note note-1">♪</span>
-              <span className="music-note note-2">♫</span>
-              <span className="music-note note-3">♬</span>
-            </>
+            <div className="music-floating-notes-layer" aria-hidden="true">
+              <motion.span
+                className="floating-note note-1"
+                animate={{ y: [-10, -50], opacity: [0, 1, 0], x: [-10, 15] }}
+                transition={{ duration: 2.5, repeat: Infinity }}
+              >
+                ♪
+              </motion.span>
+              <motion.span
+                className="floating-note note-2"
+                animate={{ y: [-10, -60], opacity: [0, 1, 0], x: [10, -20] }}
+                transition={{ duration: 3, repeat: Infinity, delay: 0.6 }}
+              >
+                ♫
+              </motion.span>
+              <motion.span
+                className="floating-note note-3"
+                animate={{ y: [-10, -55], opacity: [0, 1, 0], x: [-5, 10] }}
+                transition={{ duration: 2.8, repeat: Infinity, delay: 1.2 }}
+              >
+                ♬
+              </motion.span>
+            </div>
           )}
 
-          <div className="birthday-song-icon">🎶</div>
+          {/* Equalizer Visualizer Bars */}
+          <div className="equalizer-bars-container">
+            {Array.from({ length: 9 }).map((_, i) => (
+              <motion.div
+                key={i}
+                className={`equalizer-bar bar-${i}`}
+                animate={{
+                  height: isPlaying ? ["12px", `${Math.random() * 32 + 16}px`, "12px"] : "8px",
+                }}
+                transition={{
+                  duration: 0.4 + (i % 3) * 0.15,
+                  repeat: isPlaying ? Infinity : 0,
+                  ease: "easeInOut",
+                }}
+              />
+            ))}
+          </div>
 
-          <h3>For The Birthday Girl</h3>
+          <div className="player-badge-status">
+            <Volume2 size={16} className="text-pink" />
+            <span>{isPlaying ? "Playing Birthday Melody ♪" : "Press Play Below"}</span>
+          </div>
 
-          <p>Press play for a little birthday melody 💕</p>
+          <h3 className="player-title">For The Birthday Girl 💗</h3>
 
-          <button type="button" className="birthday-song-button" onClick={handleToggle}>
-            {isPlaying ? "■ Stop Melody" : "▶ Play Birthday Melody"}
+          <p className="player-hint">Enjoy a soft, sweet birthday melody crafted for your special day 💕</p>
+
+          {/* Play/Stop Button */}
+          <button type="button" className="song-play-main-btn" onClick={handleToggle}>
+            {isPlaying ? (
+              <>
+                <Square size={18} fill="#fff" />
+                <span>Stop Melody</span>
+              </>
+            ) : (
+              <>
+                <Play size={18} fill="#fff" />
+                <span>Play Birthday Melody</span>
+              </>
+            )}
           </button>
-        </div>
+        </motion.div>
 
-        <div className="birthday-song-message">
+        {/* Message Below Player */}
+        <motion.div
+          className="birthday-song-message-card"
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.8, delay: 0.4 }}
+        >
+          <Sparkles size={20} className="text-gold mb-1" />
           <p>
-            A tiny birthday tune for someone
-            <br />
-            who deserves a whole lot of happiness. 💗
+            A tiny birthday tune for someone who deserves a whole lot of happiness. 💗
+          </p>
+          <p className="message-subtext">
+            May this year bring you beautiful memories, big smiles and everything you’ve been wishing for. ✨
           </p>
 
-          <p>
-            May this year bring you beautiful memories,
-            <br />
-            big smiles and everything you’ve been wishing for. ✨
-          </p>
-        </div>
-
-        <a href="#final-surprise" className="birthday-song-next-btn">
-          One Last Surprise 🎁 ↓
-        </a>
+          <a href="#final-surprise" className="song-next-btn-pill">
+            <span>One Last Surprise 🎁</span>
+            <ArrowDown size={16} />
+          </a>
+        </motion.div>
       </div>
     </section>
   );

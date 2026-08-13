@@ -1,3 +1,23 @@
+:root {
+  --bg-dark: #0b0309;
+  --bg-card: rgba(26, 12, 22, 0.7);
+  --bg-glass: rgba(255, 255, 255, 0.05);
+  --border-glass: rgba(255, 182, 207, 0.15);
+  
+  --primary-rose: #ff2a6d;
+  --rose-pink: #ec4899;
+  --rose-soft: #f472b6;
+  --rose-light: #fce7f3;
+  --gold-accent: #fbbf24;
+  --text-primary: #ffffff;
+  --text-secondary: #f3d5e2;
+  --text-muted: #c096ab;
+
+  --font-heading: 'Playfair Display', Georgia, serif;
+  --font-body: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+  --font-handwriting: 'Sacramento', cursive, sans-serif;
+}
+
 * {
   margin: 0;
   padding: 0;
@@ -6,25 +26,48 @@
 
 html {
   scroll-behavior: smooth;
+  color-scheme: dark;
 }
 
 body {
   margin: 0;
   min-width: 320px;
-  font-family: "Segoe UI", Arial, sans-serif;
-  background: #fff7fa;
-  color: #4a2435;
+  background-color: var(--bg-dark);
+  color: var(--text-primary);
+  font-family: var(--font-body);
+  overflow-x: hidden;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
 }
 
-button,
-a {
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #0d040b;
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, var(--primary-rose), var(--rose-pink));
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #ff528a;
+}
+
+::selection {
+  background: rgba(255, 42, 109, 0.4);
+  color: #ffffff;
+}
+
+button, a {
   font-family: inherit;
-}
-
-button {
-  border: none;
 }
 
 a {
   text-decoration: none;
+  color: inherit;
 }

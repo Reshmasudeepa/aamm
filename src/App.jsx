@@ -1,6 +1,9 @@
 import { useState } from "react";
 import "./App.css";
 
+import BackgroundParticles from "./components/BackgroundParticles";
+import LightboxModal from "./components/LightboxModal";
+import Navbar from "./components/Navbar";
 import SurpriseScreen from "./components/SurpriseScreen";
 import BirthdayHero from "./components/BirthdayHero";
 import Message from "./components/Message";
@@ -12,31 +15,64 @@ import FinalSurprise from "./components/FinalSurprise";
 
 function App() {
   const [surpriseOpened, setSurpriseOpened] = useState(false);
+  const [isAudioPlaying, setIsAudioPlaying] = useState(false);
+  const [lightboxItem, setLightboxItem] = useState(null);
+
+  const handleOpenLightbox = (item) => {
+    setLightboxItem(item);
+  };
+
+  const handleCloseLightbox = () => {
+    setLightboxItem(null);
+  };
+
+  const handleToggleAudio = (state) => {
+    if (typeof state === "boolean") {
+      setIsAudioPlaying(state);
+    } else {
+      setIsAudioPlaying((prev) => !prev);
+    }
+  };
 
   return (
-    <>
+    <div className="birthday-app-root">
+      {/* Global Ambient Background Particles */}
+      <BackgroundParticles />
+
       {!surpriseOpened ? (
-        <SurpriseScreen
-          onOpen={() => setSurpriseOpened(true)}
-        />
+        <SurpriseScreen onOpen={() => setSurpriseOpened(true)} />
       ) : (
-        <main className="birthday-site">
-          <BirthdayHero />
+        <>
+          {/* Top Sticky Navigation Bar */}
+          <Navbar
+            isAudioPlaying={isAudioPlaying}
+            onToggleAudio={() => handleToggleAudio()}
+          />
 
-          <Message />
+          <main className="birthday-site-main">
+            <BirthdayHero />
 
-          <Memories />
+            <Message onOpenLightbox={handleOpenLightbox} />
 
-          <SpecialThings />
+            <Memories onOpenLightbox={handleOpenLightbox} />
 
-          <Music />
+            <SpecialThings />
 
-          <BirthdaySong />
+            <Music onOpenLightbox={handleOpenLightbox} />
 
-          <FinalSurprise />
-        </main>
+            <BirthdaySong
+              externalIsPlaying={isAudioPlaying}
+              externalOnToggle={handleToggleAudio}
+            />
+
+            <FinalSurprise />
+          </main>
+        </>
       )}
-    </>
+
+      {/* Global Fullscreen Lightbox Modal */}
+      <LightboxModal item={lightboxItem} onClose={handleCloseLightbox} />
+    </div>
   );
 }
 
