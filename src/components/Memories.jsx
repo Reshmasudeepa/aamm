@@ -106,8 +106,8 @@ function Memories({ onOpenLightbox }) {
             happiness and unforgettable moments. 💕
           </p>
 
-          <a href="#special-things" className="continue-btn-pill">
-            <span>There's More For You 💗</span>
+          <a href="#video-memories" className="continue-btn-pill">
+            <span>Video Memories 🎬</span>
             <ArrowDown size={16} />
           </a>
         </motion.div>

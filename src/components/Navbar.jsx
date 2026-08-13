@@ -24,7 +24,6 @@ export default function Navbar({ isAudioPlaying, onToggleAudio }) {
   const navLinks = [
     { name: "Note 💌", href: "#message" },
     { name: "Memories 📸", href: "#memories" },
-    { name: "Special 💖", href: "#special-things" },
     { name: "Videos 🎬", href: "#video-memories" },
     { name: "Melody 🎵", href: "#music" },
     { name: "Finale 🎁", href: "#final-surprise" },
